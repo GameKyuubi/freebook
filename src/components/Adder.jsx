@@ -14,17 +14,7 @@ class Adder extends Component {
     return (
       <div className="Adder">
         <Form>
-          <Label>Book</Label>
-          <InputGroup>
-            <InputGroup className="adderControls">
-              <InputGroupAddon>Title</InputGroupAddon>
-              <Input
-                id="adderTitle"
-                placeholder="Count of Monte Cristo, The"
-                onInput={ this.props.onTitleTextBoxChange }
-              />
-            </InputGroup>
-          </InputGroup>
+          <Label>Add Book</Label>
           <InputGroup>
             <InputGroup className="adderControls">
               <InputGroupAddon>ISBN</InputGroupAddon>
@@ -34,14 +24,12 @@ class Adder extends Component {
                 onInput={ this.props.onISBNTextBoxChange }
               />
             </InputGroup>
-            <InputGroup className="adderControls">
-              <InputGroupAddon>Genre</InputGroupAddon>
-              <Input
-                id="adderGenre"
-                placeholder="Mystery"
-                onInput={ this.props.onGenreTextBoxChange }
-              />
-            </InputGroup>
+            <Button
+              onClick={ this.onSearchButtonClick }
+            >Search</Button>
+            <Button
+              onClick={ this.onSubmitButtonClick }
+            >Submit</Button>
           </InputGroup>
           <Label>Location</Label>
           <InputGroup>
@@ -62,9 +50,6 @@ class Adder extends Component {
               />
             </InputGroup>
           </InputGroup>
-          <Button
-            onClick={ this.onSubmitButtonClick }
-          >Submit</Button>
         </Form>
       </div>
     )
