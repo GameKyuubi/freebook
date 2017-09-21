@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Adder extends Component {
 
@@ -10,7 +11,15 @@ class Adder extends Component {
     this.props.onSubmit();
   }
 
+  onSearchButtonClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.props.onSearch(this.props.adderISBNFieldText);
+  }
+
   render() {
+    console.log(this.props);
     return (
       <div className="Adder">
         <Form>
@@ -51,9 +60,15 @@ class Adder extends Component {
             </InputGroup>
           </InputGroup>
         </Form>
+        <div> Title: { this.props.foundBook.title } </div>
       </div>
     )
   }
+}
+
+Adder.propTypes = {
+  adderISBNFieldText: PropTypes.string.isRequired,
+  foundBook: PropTypes.shape().isRequired,
 }
 
 export default Adder;
