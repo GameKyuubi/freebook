@@ -1,18 +1,21 @@
-var isbn = require('node-isbn');
-var express = require('express');
-var router = express.Router();
+const isbn = require('node-isbn');
+const express = require('express');
+const { promisify } = require('util');
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/book', async (req, res) => {
   console.log('HELLO');
-  isbn.resolve('9784088728988', function (err, book) {
-    if (err) {
-      console.log('Book not found', err);
-    } else {
-      console.log('Book found %j', book);
-    }
+  const resolveAsync = promisify(isbn.resolve);
+
+  try {
+    const book = await resolveAsync(req.query.isbn);
+    console.log('Book found %j', book);
     res.send(book);
-  });
+  }
+  catch (err) {
+    console.log('Book not found!', err);
+    res.status(404).send('Book not found!');
+  }
 });
 
 module.exports = router;
