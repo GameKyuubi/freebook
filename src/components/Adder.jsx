@@ -60,7 +60,16 @@ class Adder extends Component {
             </InputGroup>
           </InputGroup>
         </Form>
-        <div> Title: { this.props.foundBook.title } </div>
+        { this.props.foundBook.title ?
+            <div>
+              <h2> { this.props.foundBook.title } </h2>
+              {
+                this.props.foundBook.authors.map( (author) => {
+                  return (<h4> { author } </h4>);
+                })
+              }
+              <div> <img width='50%' src={ this.props.foundBook.imageLinks.thumbnail } /> </div>
+            </div> : null }
       </div>
     )
   }
