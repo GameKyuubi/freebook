@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Form, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 class Adder extends Component {
 
@@ -10,21 +11,19 @@ class Adder extends Component {
     this.props.onSubmit();
   }
 
+  onSearchButtonClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.props.onSearch(this.props.adderISBNFieldText);
+  }
+
   render() {
+    console.log(this.props);
     return (
       <div className="Adder">
         <Form>
-          <Label>Book</Label>
-          <InputGroup>
-            <InputGroup className="adderControls">
-              <InputGroupAddon>Title</InputGroupAddon>
-              <Input
-                id="adderTitle"
-                placeholder="Count of Monte Cristo, The"
-                onInput={ this.props.onTitleTextBoxChange }
-              />
-            </InputGroup>
-          </InputGroup>
+          <Label>Add Book</Label>
           <InputGroup>
             <InputGroup className="adderControls">
               <InputGroupAddon>ISBN</InputGroupAddon>
@@ -34,14 +33,12 @@ class Adder extends Component {
                 onInput={ this.props.onISBNTextBoxChange }
               />
             </InputGroup>
-            <InputGroup className="adderControls">
-              <InputGroupAddon>Genre</InputGroupAddon>
-              <Input
-                id="adderGenre"
-                placeholder="Mystery"
-                onInput={ this.props.onGenreTextBoxChange }
-              />
-            </InputGroup>
+            <Button
+              onClick={ this.onSearchButtonClick }
+            >Search</Button>
+            <Button
+              onClick={ this.onSubmitButtonClick }
+            >Submit</Button>
           </InputGroup>
           <Label>Location</Label>
           <InputGroup>
@@ -62,13 +59,25 @@ class Adder extends Component {
               />
             </InputGroup>
           </InputGroup>
-          <Button
-            onClick={ this.onSubmitButtonClick }
-          >Submit</Button>
         </Form>
+        { this.props.foundBook.title ?
+            <div>
+              <h2> { this.props.foundBook.title } </h2>
+              {
+                this.props.foundBook.authors.map( (author) => {
+                  return (<h4> { author } </h4>);
+                })
+              }
+              <div> <img width='50%' src={ this.props.foundBook.imageLinks.thumbnail } /> </div>
+            </div> : null }
       </div>
     )
   }
+}
+
+Adder.propTypes = {
+  adderISBNFieldText: PropTypes.string.isRequired,
+  foundBook: PropTypes.shape().isRequired,
 }
 
 export default Adder;

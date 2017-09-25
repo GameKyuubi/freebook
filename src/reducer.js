@@ -145,7 +145,10 @@ const initialState = {
   adderLatFieldText: '',
   adderLngFieldText: '',
   searchTitle: '',
-  searchAuthor: ''
+  searchAuthor: '',
+  adder: {
+    foundBook: {}
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -174,16 +177,16 @@ const reducer = (state = initialState, action) => {
         locationSearchLongitudeFieldText: state.locationSearchLongitudeFieldText === undefined ? action.location.lng : state.locationSearchLongitudeFieldText
       });
       return newState; }
-    case 'SET_ADDER_TITLE_FIELD_TEXT':
-      return Object.assign({}, state, { adderTitleFieldText: action.text });
     case 'SET_ADDER_ISBN_FIELD_TEXT':
       return Object.assign({}, state, { adderISBNFieldText: action.text });
-    case 'SET_ADDER_GENRE_FIELD_TEXT':
-      return Object.assign({}, state, { adderGenreFieldText: action.text });
     case 'SET_ADDER_LAT_FIELD_TEXT':
       return Object.assign({}, state, { adderLatFieldText: action.text });
     case 'SET_ADDER_LNG_FIELD_TEXT':
       return Object.assign({}, state, { adderLngFieldText: action.text });
+    case 'SET_FOUND_BOOK':
+      const newAdder = Object.assign({}, state.adder, { foundBook: action.book });
+      const newState = Object.assign({}, state, { adder: newAdder});
+      return newState;
     case 'SET_LOCATION_SEARCH_LATITUDE_FIELD_TEXT': {
       let newState = Object.assign({}, state);
       newState.locationSearchLatitudeFieldText = action.text;
