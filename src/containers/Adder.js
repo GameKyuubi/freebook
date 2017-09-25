@@ -1,27 +1,20 @@
 import { connect } from 'react-redux';
 import Adder from '../components/Adder';
-import { addBook, setAdderTitleFieldText, setAdderISBNFieldText, setAdderGenreFieldText, setAdderLatFieldText, setAdderLngFieldText } from '../actions/Adder';
+import { addBook, setAdderISBNFieldText, setAdderLatFieldText, setAdderLngFieldText, findBookByISBN } from '../actions/Adder';
 
 const mapStateToProps = (state) => {
   return {
-    adderTitleFieldText: state.adderTitleFieldText,
     adderISBNFieldText: state.adderISBNFieldText,
-    adderGenreFieldText: state.adderGenreFieldText,
     adderLatFieldText: state.adderTitleFieldText,
     adderLngFieldText: state.adderLngFieldText,
+    foundBook: state.adder.foundBook,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTitleTextBoxChange: (event) => {
-      dispatch(setAdderTitleFieldText(event.target.value))
-    },
     onISBNTextBoxChange: (event) => {
       dispatch(setAdderISBNFieldText(event.target.value))
-    },
-    onGenreTextBoxChange: (event) => {
-      dispatch(setAdderGenreFieldText(event.target.value))
     },
     onLatTextBoxChange: (event) => {
       dispatch(setAdderLatFieldText(event.target.value))
@@ -31,6 +24,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSubmit: () => {
       dispatch(addBook())
+    },
+    onSearch: (isbn) => {
+      dispatch(findBookByISBN(isbn))
     }
   }
 };
